@@ -40,31 +40,7 @@ const validateEmail = (emailInput) => {
 
 
 
-regForm.addEventListener('submit', e => {
-  e.preventDefault();
 
- 
-
-  const errors = [];
-
-    for(let i = 0; i < e.currentTarget.length; i++ ) {
-      if(e.currentTarget[i].type === "text") {
-        errors[i] = validateText('#' + e.currentTarget[i].id);
-      }
-      else if(e.currentTarget[i].type === "email") {
-        errors[i] = validateEmail(email);
-      }
-    }
-
-    console.log(errors)
-
-    if(errors.includes(false)) {
-      console.log('inte bra')
-    }
-    else {
-      console.log('allt är super bra')
-    }
-})
 
 const lista= []
 //lägger grejern i den ovanför
@@ -87,9 +63,52 @@ listUser();
 regForm.addEventListener('submit', (e) =>{
     e.preventDefault();
 //gör så att inget skrivs ut om det är ett tomt fält
-if(firstName.value !=='' && lastName.value !=="" && email.value){
-    firstName.classList.remove('is-invalid');
-       const user={
+
+// if(firstName.value !=='' && lastName.value !=='' && email.value){ //om fältet inte är tomt
+//     firstName.classList.remove('is-invalid');
+//        const user={
+//         id:Date.now().toString(),
+//         firstName: (firstName.value ) + '  ' + ( lastName.value),
+//         email: email.value,
+//         completed: false
+//     }
+//     lista.push(user);
+//     listUser();
+//     firstName.value = '' //tömmer input-rutan
+//     lastName.value = ''
+//     email.value = '' 
+    
+// } else {
+//     firstName.classList.add('is-invalid');
+// }
+
+// regForm.addEventListener('submit', e => {
+//   e.preventDefault();
+
+ 
+  const errors = [];
+
+    for(let i = 0; i < e.currentTarget.length; i++ ) {
+      if(e.currentTarget[i].type === "text") {
+        errors[i] = validateText('#' + e.currentTarget[i].id);
+       
+      
+  }
+           
+      else if(e.currentTarget[i].type === "email") {
+        errors[i] = validateEmail(email);
+      }
+    }
+
+    console.log(errors)
+
+    if(errors.includes(false)) {
+      console.log('inte bra')
+      
+    }
+    else {
+      console.log('succes')
+      const user={
         id:Date.now().toString(),
         firstName: (firstName.value ) + '  ' + ( lastName.value),
         email: email.value,
@@ -99,12 +118,13 @@ if(firstName.value !=='' && lastName.value !=="" && email.value){
     listUser();
     firstName.value = '' //tömmer input-rutan
     lastName.value = ''
-    email.value = '' 
-    
-} else {
-    firstName.classList.add('is-invalid');
-}
-})
+    email.value = ''
+     
+    }
 
+
+
+    
+})
 
 
