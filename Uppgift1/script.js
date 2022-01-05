@@ -1,12 +1,72 @@
-const lista= []
 
-// gör en funktion som laddar alla mina outputs på sidan
-
+const regForm = document.querySelector('#regForm');
 const output =document.querySelector('#users');
-const form=document.querySelector('#form');
 const firstName =document.querySelector('#firstName');
 const lastName =document.querySelector('#lastName');
 const email =document.querySelector('#email');
+
+
+const validateText = (id) => {
+  let input = document.querySelector(id);
+
+  if(input.value === '' || input.value.length < 2) {
+    input.classList.remove('is-valid');
+    input.classList.add('is-invalid');
+    input.focus();
+    return false;
+  }
+  else {
+    input.classList.remove('is-invalid');
+    input.classList.add('is-valid');
+    return true;
+  }
+}
+
+const validateEmail = (emailInput) => {
+  let regEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+  if(regEx.test(emailInput.value)) {
+    emailInput.classList.remove('is-invalid');
+    emailInput.classList.add('is-valid');
+    return true;
+  }
+  else {
+    emailInput.classList.remove('is-valid');
+    emailInput.classList.add('is-invalid');
+    emailInput.focus();
+    return false;
+  }
+}
+
+
+
+regForm.addEventListener('submit', e => {
+  e.preventDefault();
+
+ 
+
+  const errors = [];
+
+    for(let i = 0; i < e.currentTarget.length; i++ ) {
+      if(e.currentTarget[i].type === "text") {
+        errors[i] = validateText('#' + e.currentTarget[i].id);
+      }
+      else if(e.currentTarget[i].type === "email") {
+        errors[i] = validateEmail(email);
+      }
+    }
+
+    console.log(errors)
+
+    if(errors.includes(false)) {
+      console.log('inte bra')
+    }
+    else {
+      console.log('allt är super bra')
+    }
+})
+
+const lista= []
 //lägger grejern i den ovanför
 const listUser = () => {
     output.innerHTML = '';    //tömmer listan och skriver om den så att det inte blir dubletter
@@ -21,9 +81,10 @@ const listUser = () => {
     })
 }
 
+
 listUser();
 //När vi gör en submit vill jag lägga till det som står i listan
-form.addEventListener('submit', (e) =>{
+regForm.addEventListener('submit', (e) =>{
     e.preventDefault();
 //gör så att inget skrivs ut om det är ett tomt fält
 if(firstName.value !=='' && lastName.value !=="" && email.value){
@@ -44,3 +105,6 @@ if(firstName.value !=='' && lastName.value !=="" && email.value){
     firstName.classList.add('is-invalid');
 }
 })
+
+
+
