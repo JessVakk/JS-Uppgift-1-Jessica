@@ -1,3 +1,4 @@
+let users=[]
 
 const regForm = document.querySelector('#regForm');
 const output =document.querySelector('#users');
