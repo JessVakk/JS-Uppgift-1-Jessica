@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>edit-knapp all kod i ett</title>
+
+    <style>
+        #btnAdd {
+            text-transform: uppercase;
+            background: #22B473;
+            border: none;
+            border-radius: 3px;
+            font-weight: bold;
+            color: #FFF;
+            padding: 3px 10px;
+            width: auto;
+        }
+        
+        .tasks-parent {
+            border: 2px solid #777;
+            margin-top: 5px;
+            width: auto;
+        }
+        
+        html {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        
+        ul {
+            width: 400px;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        
+        li {
+            padding: 5px 10px;
+            color: #000;
+        }
+        
+        li span {
+            padding-left: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1> To Do List</h1>
+
+    <input type="text" id="inItemText"><button id="btnAdd">ADD</button>
+
+    <div class="tasks-parent">
+        <h4>Tasks:</h4>
+        <ul id="todolist">
+        </ul>
+    </div>
+
+
+    <script>
+        function updateItemStatus() {
+            var cbId = this.id.replace("cb_", "");
+            var itemText = document.getElementById("item_" + cbId);
+
+            if (this.checked) {
+                itemText.style.textDecoration = "line-through";
+            } else {
+                itemText.style.textDecoration = "none";
+            }
+
+        }
+
+
+
+        function addNewItem(list, itemText) {
+
+            totalItems++
+
+            var date = new Date();
+            var id = "" + date.getMinutes(); + date.getSeconds() + date.getMilliseconds() + "";
+
+            var listItem = document.createElement("li");
+            listItem.id = "li_" + id;
+
+            var checkBox = document.createElement("input");
+            checkBox.type = "checkbox";
+            checkBox.id = "cb_" + totalItems;
+            checkBox.onclick = updateItemStatus;
+
+            var span = document.createElement("span");
+            span.id = "item_" + totalItems;
+            span.innerHTML = itemText;
+
+            var edit = document.createElement("a");
+            edit.href = "#";
+            edit.innerHTML = " edit |";
+            edit.addEventListener('click', editItem, false);
+
+            var deleteBtn = document.createElement("a");
+            deleteBtn.href = "#";
+            deleteBtn.innerHTML = " delete";
+            deleteBtn.addEventListener('click', removeItem, false);
+
+
+            listItem.appendChild(checkBox);
+            listItem.appendChild(span);
+            listItem.appendChild(edit);
+            listItem.appendChild(deleteBtn);
+
+            list.appendChild(listItem);
+        }
+
+
+        var totalItems = 0;
+        var lastUpdatedItemId = '';
+        var inItemText = document.getElementById("inItemText");
+        inItemText.focus();
+
+        var btnNew = document.getElementById("btnAdd");
+        btnNew.onclick = function() {
+            if (this.innerHTML == 'ADD') {
+                var inItemText = document.getElementById("inItemText");
+
+                var itemText = inItemText.value;
+                if (!itemText || itemText === "" || itemText === " ") {
+                    return false;
+                }
+
+                addNewItem(document.getElementById("todolist"), itemText);
+            } else if (this.innerHTML == 'EDIT') {
+                this.innerHTML = 'ADD';
+                var inItemText = document.getElementById("inItemText");
+
+                var itemText = inItemText.value;
+                if (!itemText || itemText === "" || itemText === " ") {
+                    return false;
+                }
+                document.getElementById(lastUpdatedItemId).innerHTML = itemText;
+               inItemText.value = "";
+            }
+        }
+        inItemText.onkeyup = function(event) {
+
+            if (event.which == 13) {
+                var itemText = inItemText.value;
+
+                if (!itemText || itemText === "" || itemText === " ") {
+                    return false;
+                }
+
+                addNewItem(document.getElementById("todolist"), itemText);
+
+                inItemText.focus();
+                inItemText.select();
+            }
+
+        };
+
+        function removeItem() {
+            var li = this.parentNode;
+            li.remove();
+        }
+
+        function editItem() {
+            btnNew.innerHTML = 'EDIT';
+            var li = this.parentNode;
+            var item = li.getElementsByTagName("*");
+            inItemText.value = item[1].innerHTML;
+            lastUpdatedItemId = item[1].id;
+            console.log(item);
+        }
+    </script>
+
+</body>
+
+</html>

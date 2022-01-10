@@ -45,19 +45,17 @@ const listUser = () => {
     users.forEach(user =>{
     output.innerHTML += `
     <div id="${user.id}" class="d-flex justify-content-between align-items-center border bg-white p-2 mb-2">
+       <div>
         <p class="m-0 h4">${user.firstName}</p>
         <p class="m-0"><a href="#">${user.email}</a></p>
+      </div>
+     <div>
         <button type="button" id="change-btn" class="btn btn-danger bg-info">Change</button>
-        <button type="button" id="save-btn" class="btn btn-danger bg-success">Save</button>
         <button type="button" id="delete-btn" class="btn btn-danger btn-sm">X</button>
       </div>
+      </div>
     `;
-    // <div id="${user.id}">
-    // <p class="h4">${user.firstName}</p>
-    //
-    // <button type="button" id="delete-btn" class="btn btn-danger btn-sm">X</button>
-    // </div>
-    // `;
+  
 
     })
   }
@@ -105,10 +103,13 @@ regForm.addEventListener('submit', (e) =>{
     }
  })
 
+//  knapp som tar bort användaren från listan
 output.addEventListener('click', e => {
   // console.log(e.target.parentNode.id)
   if(e.target.id === 'delete-btn') {
-    users = users.filter(user => user.id !== e.target.parentNode.id);
+    users = users.filter(user => user.id !== e.target.parentNode.parentNode.id);
     listUser();
   }
 })
+
+
