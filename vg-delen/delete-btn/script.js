@@ -50,7 +50,7 @@ const listUser = () => {
         <p class="m-0"><a href="#">${user.email}</a></p>
       </div>
      <div>
-        <button type="button" id="change-btn" class="btn btn-danger bg-info">Change</button>
+        <button type="button" id="edit-btn" class="btn btn-danger bg-info">Edit</button>
         <button type="button" id="delete-btn" class="btn btn-danger btn-sm">X</button>
       </div>
       </div>
@@ -112,7 +112,7 @@ output.addEventListener('click', e => {
     users = users.filter(user => user.id !== e.target.parentNode.parentNode.id);
     listUser();
   }
-  else if (e.target.id === 'change-btn') {
+  else if (e.target.id === 'edit-btn') {
     // skapa en referens till det aktuella objektet
     userRef = users.find(user => user.id === e.target.parentNode.parentNode.id)
 
@@ -122,9 +122,31 @@ output.addEventListener('click', e => {
 
     //kolla vad som ändras i inputs
 
-    userRef.firstName = 'Joakim';
-    listUser();
+    // firstName.value = userRef.firstName;
+    // userRef.lastName = 'Andersson';
+    // userRef.email = 'dess@and.se';
+    // listUser();
   }
 })
+const BtnEditInUse = document.querySelector('#btnEdit');
+const UseBtnSubmitInUse = document.querySelector('#btnSubmit');
+
+const InUse = true;
+
+const toggleInUse = () => {
+  if(InUse) {
+    BtnEditInUse.classList.add('d-none');
+    UseBtnSubmitInUse.classList.remove('d-none');
+  } else {
+    UseBtnSubmitInUse.classList.add('d-none');
+    BtnEditInUse.classList.remove('d-none');
+  }
+}
+toggleInUse()
 
 
+
+// hämta ut det specifika objektet ur arrayen (låt oss kalla det userRef) 
+// och använda det för att skriva ut värdena i dina input.. 
+// typ firstName.value = userRef.firstName och sen vill du ändra värdena i din 
+// userRef till det som ändras i dina inputs.
