@@ -5,6 +5,7 @@ const output =document.querySelector('#users');
 const firstName =document.querySelector('#firstName');
 const lastName =document.querySelector('#lastName');
 const email =document.querySelector('#email');
+// const Useremail =document.querySelector('#user.email');
 
 
 const validateText = (id) => {
@@ -50,7 +51,7 @@ const listUser = () => {
         <p class="m-0"><a href="#">${user.email}</a></p>
       </div>
      <div>
-        <button type="button" id="edit-btn" class="btn btn-danger bg-info">Edit</button>
+        <button type="button" id="change-btn" class="btn btn-danger bg-info">Change</button>
         <button type="button" id="delete-btn" class="btn btn-danger btn-sm">X</button>
       </div>
       </div>
@@ -67,7 +68,18 @@ regForm.addEventListener('submit', (e) =>{
     e.preventDefault();
 //gör så att inget skrivs ut om det är ett tomt fält
 
-
+const checkUserEmailExists = (userEmail, email) => {
+  if(userEmail.value === email.value) {
+    SetError(email, 'Email already exist, chose another one');
+    return false;
+  }
+  
+else {
+ setSuccess(userEmail.value !== email.value);
+ console.log('can create a new user')
+ return true;
+}
+}
 
  
   const errors = [];
@@ -104,36 +116,11 @@ regForm.addEventListener('submit', (e) =>{
     email.value = ''
     }
  })
-// const userRef;
-//  knapp som tar bort användaren från listan
-output.addEventListener('click', e => {
-  // console.log(e.target.parentNode.id)
-  if(e.target.id === 'delete-btn') {
-    users = users.filter(user => user.id !== e.target.parentNode.parentNode.id);
-    listUser();
-  }
-  else if (e.target.id === 'edit-btn') {
-    // skapa en referens till det aktuella objektet
-    userRef = users.find(user => user.id === e.target.parentNode.parentNode.id)
-
-    firstName.value = userRef.firstName;
-    lastName.value = userRef.lastName;
-    email.value = userRef.email;
-
-    //kolla vad som ändras i inputs
-
-    // firstName.value = userRef.firstName;
-    // userRef.lastName = 'Andersson';
-    // userRef.email = 'dess@and.se';
-    // listUser();
-  }
-})
-const BtnEditInUse = document.querySelector('#btnEdit');
-const UseBtnSubmitInUse = document.querySelector('#btnSubmit');
-
-const InUse = true;
-
-const toggleInUse = () => {
+ const BtnEditInUse = document.querySelector('#btnEdit');
+ const UseBtnSubmitInUse = document.querySelector('#btnSubmit');
+ 
+ const InUse = true;
+ const toggleInUse = () => {
   if(InUse) {
     BtnEditInUse.classList.add('d-none');
     UseBtnSubmitInUse.classList.remove('d-none');
@@ -143,10 +130,38 @@ const toggleInUse = () => {
   }
 }
 toggleInUse()
+  
+//  knapp som tar bort användaren från listan
+output.addEventListener('click', e => {
+  // console.log(e.target.parentNode.id)
+  
+  
+  if(e.target.id === 'delete-btn') {
+    users = users.filter(user => user.id !== e.target.parentNode.parentNode.id);
+    listUser();
+  }
+  else if (e.target.id === 'change-btn') {
+  let userRef = null;
+    userRef = users.find(user => user.id === e.target.parentNode.parentNode.id)
+
+    firstName.value = userRef.firstName;
+    lastName.value = userRef.lastName;
+    email.value = userRef.email;
+
+    
+    //kolla vad som ändras i inputs
+
+    firstName.value = userRef.firstName;
+    userRef.lastName = 'Andersson';
+    userRef.email = 'jess@and.se';
+    listUser();
+  
+  
+
+  
+  }})
 
 
 
-// hämta ut det specifika objektet ur arrayen (låt oss kalla det userRef) 
-// och använda det för att skriva ut värdena i dina input.. 
-// typ firstName.value = userRef.firstName och sen vill du ändra värdena i din 
-// userRef till det som ändras i dina inputs.
+
+
