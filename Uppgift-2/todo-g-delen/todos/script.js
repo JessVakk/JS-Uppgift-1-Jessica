@@ -5,7 +5,7 @@ const output = document.querySelector('#output');
 let todos = [];
 
 const fetchTodos = async () => {
-  const res = await fetch('https://jsonplaceholder.typicode.com/todos')
+  const res = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
   const data = await res.json()
   todos = data;
 
@@ -44,14 +44,24 @@ const createTodoElement = todo => {
   return card;
 }
 
+
+
 function removeTodo(id, todo) {
-  todos = todos.filter(todo => todo.id !== id)
-  listTodos()
-  // DELETE from db
-  //if()
-  // todo.remove()
+  todos = todos.filter(todo => todo.id !== id) 
   console.log(todos)
-}
+
+  fetch('https://jsonplaceholder.typicode.com/todos/1', {
+    method: 'DELETE',
+   
+  });
+        if(todo.status === 200) {
+          throw new Error('kan inte ta bort uppgiften')
+        }
+              
+        else if (todo.remove()) {
+        } 
+      }
+      
 const validateText = (input) =>{
   if(input.value.trim() === ''){
     console.log(input.parentElement)
@@ -88,10 +98,12 @@ const createNewTodo = title => {
   })
   .then(res => res.json())
   .then(data => {
-    // console.log(data)
+//     const id = new URLSearchParams(window.location.search).get('id');
+// console.log(id)
+    console.log(data)
     todos.unshift(data);
-    listTodos()
-    // output.prepend(createTodoElement(data))
+    // listTodos()
+    output.prepend(createTodoElement(data))
   })
 }
 
