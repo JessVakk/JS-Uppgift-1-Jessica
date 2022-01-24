@@ -32,6 +32,21 @@ body {
 .btn-sm {
   padding: .5em .8em;
 }
+.delete-btn{
+  background: #ec892d; 
+  color: #fff;
+  border: none;
+  padding: 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.checkbox-success {
+  background-color: #17db21;
+  color: #0a0000;
+}
+.btn-sm {
+  padding: .5em .8em;
+}
 .header {
   display: flex;
   justify-content: center;
@@ -88,6 +103,7 @@ body {
 }
 
 .todo-title {
+  flex: 1;
   font-size: 1.1rem;
   font-weight: 600;
 }

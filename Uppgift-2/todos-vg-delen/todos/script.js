@@ -2,7 +2,9 @@ const form = document.querySelector('#todoForm');
 const input = document.querySelector('#todoInput');
 const output = document.querySelector('#output');
 
+
 let todos = [];
+
 
 const fetchTodos = async () => {
   const res = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
@@ -21,7 +23,17 @@ const listTodos = () => {
     output.appendChild(createTodoElement(todo))
   })
 }
+function updateItemStatus() {
+  let cbId = this.id.replace("cb_", "");
+  let itemText = document.getElementById("item_" + cbId);
 
+  if (this.checked) {
+      itemText.style.textDecoration = "line-through";
+  } else {
+      itemText.style.textDecoration = "none";
+  }
+
+}
 
 const createTodoElement = todo => {
 
@@ -36,7 +48,11 @@ const createTodoElement = todo => {
   button.classList.add('btn', 'btn-danger', 'btn-sm');
   button.innerText = 'X';
 
+  let cButton = document.createElement('button');
+  cButton.innerHTML = '<i class="fas fa-check-circle"></i>';
+  cButton.classList.add('checked-btn', 'btn');
   
+  card.appendChild(cButton);
   card.appendChild(title);
   card.appendChild(button);
   
@@ -44,24 +60,32 @@ const createTodoElement = todo => {
   return card;
 }
 
+output.addEventListener('click', checkComplete);
+
+function checkComplete(e) {
+  const item = e.target;
+  if(item.classList[0] === 'checked-btn') {
+    const todo = item.parentElement;
+    todo.classList.toggle('completed');
+  }
+}  
+
 function removeTodo(id, todo) {
   todos = todos.filter(todo => todo.id !== id) 
   console.log(todos)
 
   fetch('https://jsonplaceholder.typicode.com/todos/1', {
     method: 'DELETE',
-   
   });
-        if(todo.status === 200) {
-          throw new Error('kan inte ta bort uppgiften')
-          
-        }
-              
-        else if (todo.remove()) {
 
-        } 
-        
-      }
+  if(todo.status === 200) {
+      throw new Error('kan inte ta bort uppgiften')
+    }
+    
+  else{(todo.remove()) 
+  } 
+}      
+
   
     
 const validateText = (input) =>{

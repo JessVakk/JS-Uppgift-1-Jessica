@@ -40,6 +40,7 @@ const createTodoElement = todo => {
   card.appendChild(title);
   card.appendChild(button);
   
+  
   button.addEventListener('click', () => removeTodo(todo.id, card))
   return card;
 }
@@ -52,7 +53,7 @@ function removeTodo(id, todo) {
 
   fetch('https://jsonplaceholder.typicode.com/todos/1', {
     method: 'DELETE',
-   
+    
   });
         if(todo.status === 200) {
           throw new Error('kan inte ta bort uppgiften')
@@ -61,7 +62,7 @@ function removeTodo(id, todo) {
         else if (todo.remove()) {
         } 
       }
-      
+
 const validateText = (input) =>{
   if(input.value.trim() === ''){
     console.log(input.parentElement)
