@@ -60,6 +60,25 @@ const createTodoElement = todo => {
   return card;
 }
 
+function removeTodo(id, todo) {
+  todos = todos.filter(todo => todo.id !== id)
+   const res = fetch('https://jsonplaceholder.typicode.com/todos/1', {
+      method: "delete"
+    }).then(res => {
+  
+    if(res.status !== 200) {
+      const message = 'Error with Status Code: ' + res.status;
+      throw new Error(message);
+    }
+     
+  else{
+    const data = res.json();
+    console.log(data);
+    console.log("success");
+    listTodos()
+   
+  }
+})
 output.addEventListener('click', checkComplete);
 
 function checkComplete(e) {
@@ -69,25 +88,7 @@ function checkComplete(e) {
     todo.classList.toggle('completed');
   }
 }  
-
-function removeTodo(id, todo) {
-  todos = todos.filter(todo => todo.id !== id) 
-  console.log(todos)
-
-  fetch('https://jsonplaceholder.typicode.com/todos/1', {
-    method: 'DELETE',
-  });
-
-  if(todo.status === 200) {
-      throw new Error('kan inte ta bort uppgiften')
-    }
-    
-  else{(todo.remove()) 
-  } 
-}      
-
   
-    
 const validateText = (input) =>{
   if(input.value.trim() === ''){
     console.log(input.parentElement)
@@ -109,7 +110,7 @@ const validateText = (input) =>{
     validateText(todoInput);
     
   })
-
+}
 
 const createNewTodo = title => {
     fetch('https://jsonplaceholder.typicode.com/todos', {
