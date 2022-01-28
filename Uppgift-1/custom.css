@@ -1,0 +1,22 @@
+
+#btnEdit{
+    border: 1px solid transparent;   
+}
+#btnEdit:hover{
+    background-color: #06a1b9;
+    
+}
+#btnSubmit{
+    border: 1px solid transparent;
+}
+#btnSubmit:hover{
+    background-color: #06a1b9;
+    
+}
+#change-btn{
+    border: 1px solid transparent; 
+}
+#change-btn:hover{
+    background-color: #06a1b9;
+    
+}

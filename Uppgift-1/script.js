@@ -1,11 +1,11 @@
 let users = []
 
 const regForm = document.querySelector('#regForm');
-const output = document.querySelector ('#users');
-const firstName = document.querySelector('#firstName');
-const lastName = document.querySelector('#lastName');
-const email = document.querySelector('#email');
-const userEmail = document.querySelector('#user.email');
+const output =document.querySelector('#users');
+const firstName =document.querySelector('#firstName');
+const lastName =document.querySelector('#lastName');
+const email =document.querySelector('#email');
+// const Useremail =document.querySelector('#user.email');
 
 
 const validateText = (id) => {
@@ -42,7 +42,7 @@ const validateEmail = (emailInput) => {
 
 
 const listUser = () => {
-    output.innerHTML = '';    //tömmer listan och skriver om den så att det inte blir dubletter
+    output.innerHTML = '';    
     users.forEach(user =>{
     output.innerHTML += `
     <div id="${user.id}" class="d-flex justify-content-between align-items-center border bg-white p-2 mb-2">
@@ -51,33 +51,22 @@ const listUser = () => {
         <p class="m-0"><a href="#">${user.email}</a></p>
       </div>
      <div>
-        <button type="button" id="edit-btn" class="btn btn-danger bg-info">Edit</button>
+        <button type="button" id="change-btn" class="btn btn-info bg-info btn-sm">Change</button>
         <button type="button" id="delete-btn" class="btn btn-danger btn-sm">X</button>
       </div>
       </div>
     `;
   
-
     })
   }
 
 
 listUser();
-//När vi gör en submit vill jag lägga till det som står i listan
+
 regForm.addEventListener('submit', (e) =>{
     e.preventDefault();
-//gör så att inget skrivs ut om det är ett tomt fält
 
-const checkUserEmailExists = (userEmail, email) => {
-  if(userEmail.value === email.value) {
-    SetError(userEmail, 'Email already exist, chose another one');
-  }
-else {
- setSuccess(userEmail);
-}
-}
 
- 
   const errors = [];
 
     for(let i = 0; i < e.currentTarget.length; i++ ) {
@@ -87,10 +76,6 @@ else {
            
       else if(e.currentTarget[i].type === "email") {
         errors[i] = validateEmail(email);
-      }
-      else{(e.currentTarget[i].type !== "user-email") 
-        errors[i] = checkUserEmailExists(userEmail);
-
       }
     }
 
@@ -111,35 +96,44 @@ else {
 
     users.push(user);
     listUser();
-    firstName.value = '' //tömmer input-rutan
+    firstName.value = '' 
     lastName.value = ''
     email.value = ''
     }
  })
-// const userRef;
-// const userRef= document.querySelector('#userRef');
-//  knapp som tar bort användaren från listan
+ const BtnEditInUse = document.querySelector('#btnEdit');
+ const UseBtnSubmitInUse = document.querySelector('#btnSubmit');
+ 
+ const InUse = true;
+ const toggleInUse = () => {
+  if(InUse) {
+    BtnEditInUse.classList.add('d-none');
+    UseBtnSubmitInUse.classList.remove('d-none');
+  } else {
+    UseBtnSubmitInUse.classList.add('d-none');
+    BtnEditInUse.classList.remove('d-none');
+  }
+}
+toggleInUse()
+  
+
 output.addEventListener('click', e => {
-  // console.log(e.target.parentNode.id)
+  
   if(e.target.id === 'delete-btn') {
+    console.log(e.target.id)
     users = users.filter(user => user.id !== e.target.parentNode.parentNode.id);
     listUser();
   }
-  else if (e.target.id === 'edit-btn') {
-    
-    // skapa en referens till det aktuella objektet
+  else if (e.target.id === 'change-btn') {
+    let userRef = null;
     userRef = users.find(user => user.id === e.target.parentNode.parentNode.id)
+    console.log(e)
 
     firstName.value = userRef.firstName;
     lastName.value = userRef.lastName;
     email.value = userRef.email;
-    
-    
-    
     listUser();
+    
   }
-
-
-
-
 })
+  
